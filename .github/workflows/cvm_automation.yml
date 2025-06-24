@@ -1,3 +1,4 @@
+# 🔄 Forçando GitHub Actions a atualizar
 name: Automação CVM Diária
 
 on:
