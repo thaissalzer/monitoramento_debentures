@@ -2,6 +2,8 @@ import requests
 import zipfile
 import pandas as pd
 import os
+import smtplib
+from email.mime.text import MIMEText
 from datetime import datetime
 
 # ======================
@@ -17,6 +19,13 @@ ARQUIVO_ZIP_LOCAL = os.path.join(PASTA_DOWNLOADS, "oferta_distribuicao.zip")
 ARQUIVOS_CSV_PARA_EXTRAIR = ["oferta_distribuicao.csv", "oferta_resolucao_160.csv"]
 ARQUIVO_CVM_PARA_PROCESSAR = os.path.join(PASTA_DOWNLOADS, "oferta_resolucao_160.csv")
 ARQUIVO_DEB_PROCESSADAS = os.path.join(PASTA_PROJETO, "deb_processadas.csv")
+
+# Configurações de E-mail
+EMAIL_REMETENTE = "python.para.negocios@gmail.com"
+SENHA_APP_EMAIL = "kool csfe venh yqfs"  # Senha de app do Gmail
+EMAIL_DESTINATARIO = "thaissalzer@gmail.com"
+SERVIDOR_SMTP = "smtp.gmail.com"
+PORTA_SMTP = 587
 
 # ======================
 # 🔽 Funções
@@ -94,6 +103,53 @@ def processar_e_comparar_dados():
 
     return novas_entradas
 
+def enviar_email_alerta(novas_entradas):
+    if novas_entradas.empty:
+        log("Nenhuma nova entrada. E-mail não será enviado.")
+        return
+
+    log("Enviando e-mail de alerta...")
+
+    assunto = f"📢 Novas Debêntures Incentivadas na CVM ({len(novas_entradas)} novas)"
+    coluna_link = "Numero_Requerimento"
+    base_link = "https://web.cvm.gov.br/sre-publico-cvm/#/oferta-publica/"
+
+    detalhes = ""
+    if coluna_link in novas_entradas.columns:
+        links = [
+            f"{base_link}{str(num)}"
+            for num in novas_entradas[coluna_link].dropna().astype(str).head(10)
+        ]
+        detalhes = "\n".join(links)
+    else:
+        detalhes = novas_entradas.head(10).to_string()
+
+    corpo = f"""
+Prezados,
+
+Foram detectadas {len(novas_entradas)} novas ofertas de debêntures com incentivo fiscal na CVM.
+
+Detalhes:
+{detalhes}
+
+Atenciosamente,
+Automação CVM
+"""
+
+    msg = MIMEText(corpo, "plain", "utf-8")
+    msg["Subject"] = assunto
+    msg["From"] = EMAIL_REMETENTE
+    msg["To"] = EMAIL_DESTINATARIO
+
+    try:
+        with smtplib.SMTP(SERVIDOR_SMTP, PORTA_SMTP) as server:
+            server.starttls()
+            server.login(EMAIL_REMETENTE, SENHA_APP_EMAIL)
+            server.send_message(msg)
+        log(f"E-mail enviado para {EMAIL_DESTINATARIO}.")
+    except Exception as e:
+        log(f"ERRO ao enviar e-mail: {e}")
+
 # ======================
 # 🚀 EXECUÇÃO
 # ======================
@@ -104,6 +160,7 @@ if __name__ == "__main__":
         descompactar_zip()
         novas = processar_e_comparar_dados()
         if not novas.empty:
+            enviar_email_alerta(novas)
             log(f"{len(novas)} novas debêntures encontradas.")
         else:
             log("Nenhuma nova debênture encontrada.")
