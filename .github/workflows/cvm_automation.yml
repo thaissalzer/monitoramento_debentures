@@ -2,7 +2,7 @@ name: Automação CVM Diária
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Executa todos os dias às 9h da manhã (Horário de Brasília)
+    - cron: '0 12 * * *'  # Todos os dias às 9h da manhã (Horário de Brasília)
   workflow_dispatch:
 
 jobs:
@@ -24,9 +24,7 @@ jobs:
 
       - name: 📂 Verificar estrutura de arquivos
         run: |
-          echo "Diretório atual:"
           pwd
-          echo "Conteúdo da raiz:"
           ls -la
 
       - name: 🚀 Executar script de automação CVM
