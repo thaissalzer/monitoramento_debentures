@@ -2,8 +2,8 @@ name: Automação CVM Diária
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Todos os dias às 9h da manhã (horário de Brasília, que é UTC-3)
-  workflow_dispatch:  # Permite executar manualmente também
+    - cron: '0 12 * * *'  # Todos os dias às 9h da manhã (Horário de Brasília = UTC-3)
+  workflow_dispatch:  # Permite rodar manualmente também
 
 jobs:
   run-cvm-automation:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: 🔄 Checkout do código
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true  # 🔑 Permite usar git push
 
       - name: ⚙️ Configurar Python
         uses: actions/setup-python@v4
@@ -24,4 +26,12 @@ jobs:
 
       - name: 🚀 Executar script de automação CVM
         run: |
-          python automacao_cvm.py
+          python automacao.py
+
+      - name: 💾 Commit arquivo CSV de controle
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add deb_processadas.csv || echo "Nada para adicionar"
+          git commit -m "Atualiza deb_processadas.csv automático via GitHub Actions" || echo "Nada para commit"
+          git push
