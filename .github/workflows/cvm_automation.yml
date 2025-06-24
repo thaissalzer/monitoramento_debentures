@@ -1,0 +1,27 @@
+name: Automação CVM Diária
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Todos os dias às 9h da manhã (horário de Brasília, que é UTC-3)
+  workflow_dispatch:  # Permite executar manualmente também
+
+jobs:
+  run-cvm-automation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout do código
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Instalar dependências
+        run: |
+          pip install -r requirements.txt
+
+      - name: 🚀 Executar script de automação CVM
+        run: |
+          python automacao_cvm.py
