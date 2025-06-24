@@ -2,8 +2,8 @@ name: Automação CVM Diária
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Todos os dias às 9h da manhã (Horário de Brasília = UTC-3)
-  workflow_dispatch:  # Permite rodar manualmente também
+    - cron: '0 12 * * *'  
+  workflow_dispatch:
 
 jobs:
   run-cvm-automation:
@@ -13,7 +13,7 @@ jobs:
       - name: 🔄 Checkout do código
         uses: actions/checkout@v3
         with:
-          persist-credentials: true  # 🔑 Permite usar git push
+          persist-credentials: true
 
       - name: ⚙️ Configurar Python
         uses: actions/setup-python@v4
@@ -23,6 +23,10 @@ jobs:
       - name: 📦 Instalar dependências
         run: |
           pip install -r requirements.txt
+
+      - name: 📂 Listar arquivos no diretório
+        run: |
+          ls -R
 
       - name: 🚀 Executar script de automação CVM
         run: |
