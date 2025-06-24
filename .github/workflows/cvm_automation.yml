@@ -2,8 +2,8 @@ name: Automação CVM Diária
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # ⏰ Todos os dias às 9h da manhã (Horário de Brasília = UTC-3)
-  workflow_dispatch:  # 🚀 Permite executar manualmente também
+    - cron: '0 12 * * *'
+  workflow_dispatch:
 
 jobs:
   run-cvm-automation:
@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: 🔄 Checkout do código
         uses: actions/checkout@v3
-        with:
-          persist-credentials: true  # 🔑 Permite git push para salvar CSV
 
       - name: ⚙️ Configurar Python
         uses: actions/setup-python@v4
@@ -24,25 +22,25 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: 📂 🔍 Verificar estrutura de arquivos
+      - name: 📂 Verificar estrutura de arquivos
         run: |
           echo "Diretório atual:"
           pwd
           echo "Conteúdo da raiz:"
           ls -la
-          echo "Conteúdo da pasta .github:"
-          ls -la .github
-          echo "Conteúdo da pasta .github/workflows:"
-          ls -la .github/workflows
 
       - name: 🚀 Executar script de automação CVM
         run: |
           python automacao_cvm.py
 
-      - name: 💾 Commit arquivo CSV de controle
+      - name: 🔑 Configurar autenticação no Git
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.ACTIONS_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: 💾 Commit arquivo CSV de controle
+        run: |
           git add deb_processadas.csv || echo "Nenhum arquivo para adicionar"
           git commit -m "Atualiza deb_processadas.csv automático via GitHub Actions" || echo "Nada para commit"
           git push
