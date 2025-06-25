@@ -3,7 +3,7 @@ name: Automação CVM Diária
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # 🔥 A cada 5 minutos (para teste)
+    - cron: '0 12 * * *'  # 🔥 A cada 5 minutos (para teste)
   workflow_dispatch:
 
 jobs:
