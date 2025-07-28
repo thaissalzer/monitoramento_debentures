@@ -2,7 +2,7 @@ name: Automação CVM Diária
 
 on:
   schedule:
-    - cron: '50 10 * * *'
+    - cron: '20 11 * * *'
   workflow_dispatch:
 
 permissions:
