@@ -26,7 +26,8 @@ SENHA_APP_EMAIL = "kool csfe venh yqfs"  # Senha de app do Gmail
 EMAILS_DESTINATARIOS = [
     "thaissalzer@gmail.com",
     "thais.procopio@fazenda.gov.br",
-    "python.para.negocios@gmail.com"
+    "python.para.negocios@gmail.com",
+    "monitoramentodebentures@fazenda.gov.br"
 ]
 SERVIDOR_SMTP = "smtp.gmail.com"
 PORTA_SMTP = 587
