@@ -21,8 +21,8 @@ ARQUIVO_CVM_PARA_PROCESSAR = os.path.join(PASTA_DOWNLOADS, "oferta_resolucao_160
 ARQUIVO_DEB_PROCESSADAS = os.path.join(PASTA_PROJETO, "deb_processadas.csv")
 
 # Configurações de E-mail
-EMAIL_REMETENTE = "python.para.negocios@gmail.com"
-SENHA_APP_EMAIL = "kool csfe venh yqfs"  # Senha de app do Gmail
+EMAIL_REMETENTE = "monitoramentodebentures@gmail.com"
+SENHA_APP_EMAIL = "syqz kjjy rpfe pbxg"  # Senha de app do Gmail
 EMAILS_DESTINATARIOS = [
     "thaissalzer@gmail.com",
     "thais.procopio@fazenda.gov.br",
