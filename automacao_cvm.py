@@ -27,7 +27,6 @@ EMAILS_DESTINATARIOS = [
     "thaissalzer@gmail.com",
     "thais.procopio@fazenda.gov.br",
     "carlos.colombo@fazenda.gov.br",
-    "gustavo.ferreira@fazenda.gov.br",
     "alberto.oliveira@fazenda.gov.br",
     "henrique.arakawa@fazenda.gov.br",
     "monitoramentodebentures@fazenda.gov.br"
