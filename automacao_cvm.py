@@ -24,7 +24,7 @@ ARQUIVO_DEB_PROCESSADAS = os.path.join(PASTA_PROJETO, "deb_processadas.csv")
 EMAIL_REMETENTE = "monitoramentodebentures@gmail.com"
 SENHA_APP_EMAIL = "syqz kjjy rpfe pbxg"  # Senha de app do Gmail
 EMAILS_DESTINATARIOS = [
-    "thaissalzer@gmail.com",
+    "mathias.neto@fazenda.gov.br",
     "thais.procopio@fazenda.gov.br",
     "carlos.colombo@fazenda.gov.br",
     "alberto.oliveira@fazenda.gov.br",
