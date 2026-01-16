@@ -29,6 +29,7 @@ EMAILS_DESTINATARIOS = [
     "carlos.colombo@fazenda.gov.br",
     "alberto.oliveira@fazenda.gov.br",
     "henrique.arakawa@fazenda.gov.br",
+    "victor.felipe@fazenda.gov.br",
     "monitoramentodebentures@fazenda.gov.br"
 ]
 SERVIDOR_SMTP = "smtp.gmail.com"
